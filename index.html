@@ -1,0 +1,29 @@
+<div class="countdown">
+  <div class="day">
+    <div class="number" id="days">7</div>
+    <small>DAYS LEFT 💖</small>
+  </div>
+</div>
+
+<script>
+function updateCountdown() {
+  const now = new Date();
+  let birthday = new Date(
+    now.getFullYear(), 9, 19, 0, 0, 0
+  );
+
+  if (now >= birthday) {
+    birthday = new Date(
+      now.getFullYear() + 1, 9, 19, 0, 0, 0
+    );
+  }
+
+  const diff = birthday - now;
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+  document.getElementById("days").textContent = days;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 60000);
+</script>
