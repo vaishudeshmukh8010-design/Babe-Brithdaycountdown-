@@ -1,29 +1,153 @@
-<div class="countdown">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaishnavi's Birthday Surprise 💗</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;padding:20px;
+ display:flex;justify-content:center;align-items:center;
+ font-family:Arial,sans-serif;color:#8d245d;text-align:center;
+ background:linear-gradient(135deg,#ffd6e7,#f7c7ff,#fff0f5);
+ overflow-x:hidden
+}
+.card{
+ width:100%;max-width:430px;padding:26px 18px;
+ border-radius:28px;background:#ffffffed;
+ box-shadow:0 10px 35px #d66da755;position:relative;z-index:2
+}
+h1{color:#e84393;font-size:27px}
+.subtitle{line-height:1.7}
+.heart{font-size:36px;animation:beat 1s infinite}
+@keyframes beat{50%{transform:scale(1.2)}}
+.countdown{display:flex;justify-content:center;margin:20px 0}
+.day{background:#ffe0ef;border-radius:15px;padding:14px 25px}
+.number{font-size:35px;font-weight:bold;color:#e84393}
+.gift-area{height:190px;display:flex;justify-content:center;align-items:center}
+.gift{
+ position:relative;width:110px;height:90px;cursor:pointer;
+ margin-top:45px;animation:bounce 1.5s infinite
+}
+.box{
+ position:absolute;bottom:0;left:5px;width:100px;height:65px;
+ border-radius:5px;background:#ff5ca8;
+ background:linear-gradient(90deg,#ff5ca8,#ff83bd)
+}
+.ribbon{position:absolute;left:44px;bottom:0;width:22px;height:65px;background:#ffe66d}
+.lid{
+ position:absolute;top:10px;left:0;width:110px;height:23px;
+ border-radius:5px;background:#e84393;z-index:3;
+ transition:transform .8s ease
+}
+.bow{
+ position:absolute;top:-13px;left:38px;width:34px;height:20px;
+ border:7px solid #ffe66d;border-radius:50%;z-index:4
+}
+.gift.open .lid{transform:translate(-18px,-48px) rotate(-25deg)}
+.gift.open{animation:none}
+.gift.open:after{
+ content:"💌";position:absolute;top:-48px;left:38px;font-size:36px;
+ animation:pop .8s ease
+}
+@keyframes pop{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes bounce{50%{transform:translateY(-8px)}}
+button{
+ border:0;border-radius:25px;padding:13px 18px;margin:7px;
+ color:white;font-size:15px;background:linear-gradient(90deg,#ff5ca8,#c65cff);
+ cursor:pointer
+}
+.message{
+ display:none;background:#fff0f7;padding:18px;margin-top:15px;
+ border-radius:18px;line-height:1.8;animation:pop .6s ease
+}
+.floating{
+ position:fixed;bottom:-40px;animation:floatUp 5s linear forwards;
+ pointer-events:none;z-index:5
+}
+@keyframes floatUp{to{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="card">
+ <div class="heart">💗</div>
+ <h1>Hey, Vaishnavi! 🎀</h1>
+ <p class="subtitle">Someone very special's birthday is coming! 🥹💕<br>
+ And that someone is YOU! 🌷</p>
+
+ <div class="countdown">
   <div class="day">
-    <div class="number" id="days">7</div>
-    <small>DAYS LEFT 💖</small>
+   <div class="number" id="days">--</div>
+   <small>DAYS LEFT 💖</small>
   </div>
+ </div>
+ <h2>🎂 Birthday Countdown 🎂</h2>
+ <p>Every day brings us closer to your special day!</p>
+
+ <div class="gift-area">
+  <div class="gift" id="gift" onclick="openGift()" role="button" aria-label="Open gift">
+   <div class="lid"></div>
+   <div class="bow"></div>
+   <div class="box"></div>
+   <div class="ribbon"></div>
+  </div>
+ </div>
+ <p>Tap the gift for a little surprise 💌</p>
+ <button onclick="openGift()">Open Your Surprise 💝</button>
+ <button onclick="showLetter()">Read My Letter 💌</button>
+
+ <div class="message" id="surprise">
+  <h2>Surprise, Birthday Girl! 🎉</h2>
+  You deserve all the happiness, love and beautiful moments in this world. 🌸💗
+  <br><br>Happy Birthday in advance, Vaishnavi! 🎂✨
+ </div>
+
+ <div class="message" id="letter">
+  <h2>Dear Vaishnavi ❤️</h2>
+  You are a beautiful soul, and your smile makes the world a little brighter. 🥹🌷
+  <br><br>
+  I hope your birthday brings endless happiness, magical memories and all the love your heart deserves. 💕
+  <br><br>
+  Until your special day, here's a little reminder:
+  <b>YOU ARE PRECIOUS! 🫶💖</b>
+  <br><br>With lots of love, hugs and kisses! 😘💗
+ </div>
+ <p>Made with 💗 just for Vaishnavi</p>
 </div>
 
 <script>
-function updateCountdown() {
-  const now = new Date();
-  let birthday = new Date(
-    now.getFullYear(), 9, 19, 0, 0, 0
-  );
-
-  if (now >= birthday) {
-    birthday = new Date(
-      now.getFullYear() + 1, 9, 19, 0, 0, 0
-    );
-  }
-
-  const diff = birthday - now;
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-  document.getElementById("days").textContent = days;
+function updateCountdown(){
+ const now=new Date();
+ let birthday=new Date(now.getFullYear(),9,19);
+ if(now>=birthday) birthday=new Date(now.getFullYear()+1,9,19);
+ const days=Math.ceil((birthday-now)/86400000);
+ document.getElementById("days").textContent=days;
 }
-
 updateCountdown();
-setInterval(updateCountdown, 60000);
+setInterval(updateCountdown,60000);
+
+let opened=false;
+function openGift(){
+ document.getElementById("gift").classList.add("open");
+ document.getElementById("surprise").style.display="block";
+ if(!opened){launchFlowers();opened=true;}
+}
+function showLetter(){
+ document.getElementById("letter").style.display="block";
+ launchFlowers();
+}
+function launchFlowers(){
+ for(let i=0;i<32;i++){
+  const item=document.createElement("div");
+  item.className="floating";
+  item.textContent=["🌸","💗","💖","🌷","💕","✨","🌹"][Math.floor(Math.random()*7)];
+  item.style.left=Math.random()*100+"vw";
+  item.style.fontSize=(20+Math.random()*22)+"px";
+  document.body.appendChild(item);
+  setTimeout(()=>item.remove(),5000);
+ }
+}
 </script>
+</body>
+</html>
